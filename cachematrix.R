@@ -16,7 +16,7 @@ makeCacheMatrix <- function(x = matrix()) {
         get <- function() x ##defines the getter for matrix x
         setmatrix <- function(matrix) invm <<- matrix  #defines the setter for the inverse matrix invm
         getmatrix <- function() invm #defines the getter for inverse matrix invm
-        
+        ##creates a list of the setters and getters created earlier
 	list(set = set, get = get,
              setmatrix = setmatrix,
              getmatrix = getmatrix)
@@ -31,11 +31,13 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
 
-	  invm <- x$getmatrix()
-        if(!is.null(invm)) {
+	  invm <- x$getmatrix() ##retrieves the inverse matrix
+        ## checks if the inverse matrix is cached
+	if(!is.null(invm)) {
                 message("getting cached data")
                 return(invm)
         }
+	##if there is no cached inverse matrix, get the inverse matrix
         data <- x$get()
         invm <- solve(data, ...)
         x$setmatrix(invm)
